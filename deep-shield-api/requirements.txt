@@ -131,9 +131,6 @@ srsly==2.5.2
 streamlit==1.54.0
 sympy==1.14.0
 tenacity==9.1.4
-tensorboard==2.20.0
-tensorboard-data-server==0.7.2
-tensorflow==2.20.0
 termcolor==3.1.0
 thinc==8.3.10
 threadpoolctl==3.6.0
