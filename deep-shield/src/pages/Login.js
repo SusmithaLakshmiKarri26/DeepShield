@@ -8,7 +8,7 @@ import AuthLayout from "../components/AuthLayout";
 const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
- 
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -50,7 +50,7 @@ const LoginPage = () => {
 
   try {
     const response = await axios.post(
-      "auth/login",
+      `${API_URL}/auth/login`,
       formData
     );
 
