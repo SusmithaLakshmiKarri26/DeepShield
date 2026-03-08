@@ -10,7 +10,10 @@ connectDB();
 
 // ================= MIDDLEWARE =================
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: [
+  "http://localhost:3000",
+  "https://your-frontend.vercel.app"
+],
   exposedHeaders: ["Content-Disposition"]
 }));
 app.use(express.json());
