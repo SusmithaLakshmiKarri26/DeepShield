@@ -1,0 +1,33 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build folders
+build/
+dist/
+
+# IDE files
+.vscode/
+.idea/
+
+# Git folder (if sharing ZIP)
+.git/
+
+# Coverage
+coverage/

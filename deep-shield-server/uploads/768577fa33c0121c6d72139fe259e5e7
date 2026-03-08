@@ -1,0 +1,38 @@
+I love CSE department.
+ Homepage.html
+login.html
+
+FACULTY: facultyview.php
+	 clubevent.html   for viewing all club events
+	 clgevents.html   for viewing all clg events
+
+COORDINATOR:   clubSelection.html
+	       coordinatorview.php
+		clubLogin.html
+
+STUDENT:    cluborcollege.html
+	    collegeeventsview.html
+	    clubview2.html
+	    coordiclubevents.html
+	    clubeventsview2.html
+
+
+login_check.php
+facultyview.php
+retrieve_events.php
+delete_event.php
+post_event.php
+change_password.php
+
+retrieve_allclubs.php
+retrieve_all_events.php
+
+coord_login2.php
+coordinatorview.php
+retrieve_club.php
+delete_clubevent.php
+clubpost_event.php
+change_password2.php
+
+change_password3.php
+retrieve_clubstu_events.php
