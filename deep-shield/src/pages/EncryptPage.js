@@ -29,7 +29,7 @@ const isStrongPassword = (p) =>
     }
   };
 
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 
   const copyText = async (text) => {
     try {
@@ -89,7 +89,7 @@ const isStrongPassword = (p) =>
       formData.append("password", password);
       formData.append("outfileName", outfileName || selectedFile.name);
 
-      const response = await fetch(`${API_URL}/api/files/encrypt`, {
+      const response = await fetch(`${API_URL}/files/encrypt`, {
   method: "POST",
   headers: {
     Authorization: `Bearer ${token}`,

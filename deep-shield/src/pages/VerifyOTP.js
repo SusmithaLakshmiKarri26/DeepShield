@@ -10,6 +10,7 @@ const VerifyOTP = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { login } = useContext(AuthContext);
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 
   const email = location.state?.email;
 
@@ -52,7 +53,7 @@ const VerifyOTP = () => {
       setError("");
 
       const response = await axios.post(
-        "http://localhost:5000/api/auth/verify-otp",
+        `${API_URL}/auth/verify-otp`,
         {
           email,
           otp: enteredOtp,

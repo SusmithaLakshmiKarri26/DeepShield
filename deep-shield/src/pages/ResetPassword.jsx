@@ -20,9 +20,9 @@ const ResetPassword = () => {
     }
 
     try {
-      const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+      const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
       await axios.post(
-        `${API_URL}/api/auth/reset-password/${token}`,
+        `${API_URL}/auth/reset-password/${token}`,
         { password }
       );
 

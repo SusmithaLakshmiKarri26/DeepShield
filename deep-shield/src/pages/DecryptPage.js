@@ -9,7 +9,7 @@ const DecryptPage = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 
   const handleDecrypt = async (e) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ const DecryptPage = () => {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `${API_URL}/api/files/decrypt`,
+        `${API_URL}/files/decrypt`,
         {
           method: "POST",
           headers: {
