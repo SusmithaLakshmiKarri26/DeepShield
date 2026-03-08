@@ -12,7 +12,7 @@ connectDB();
 app.use(cors({
   origin: [
   "http://localhost:3000",
-  "https://your-frontend.vercel.app"
+  "https://deep-shield-6ayc.vercel.app/"
 ],
   exposedHeaders: ["Content-Disposition"]
 }));
