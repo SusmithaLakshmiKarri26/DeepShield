@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import AuthLayout from "../components/AuthLayout";
+import api from "../api";
 const EncryptPage = () => {
   const fileInputRef = useRef(null);
 
@@ -29,8 +30,7 @@ const isStrongPassword = (p) =>
     }
   };
 
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
-
+  
   const copyText = async (text) => {
     try {
       if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
@@ -89,21 +89,13 @@ const isStrongPassword = (p) =>
       formData.append("password", password);
       formData.append("outfileName", outfileName || selectedFile.name);
 
-      const response = await fetch(`${API_URL}/files/encrypt`, {
-  method: "POST",
+      const response = await api.post("/files/encrypt", formData, {
   headers: {
     Authorization: `Bearer ${token}`,
   },
-  body: formData,
 });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Encryption failed");
-      }
-
-      setDownloadUrl(data.fileUrl);
+setDownloadUrl(response.data.fileUrl);
     } catch (err) {
       setError(err.message);
     } finally {

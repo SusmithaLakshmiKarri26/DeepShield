@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 import AuthLayout from "../components/AuthLayout";
 import { AuthContext } from "../context/AuthContext";
 
@@ -10,8 +10,7 @@ const VerifyOTP = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { login } = useContext(AuthContext);
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
-
+  
   const email = location.state?.email;
 
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -52,8 +51,8 @@ const VerifyOTP = () => {
       setLoading(true);
       setError("");
 
-      const response = await axios.post(
-        `${API_URL}/auth/verify-otp`,
+      const response = await api.post(
+        "/auth/verify-otp",
         {
           email,
           otp: enteredOtp,

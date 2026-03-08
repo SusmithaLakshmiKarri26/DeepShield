@@ -2,14 +2,13 @@
 
 import { useState } from "react";
 import AuthLayout from "../components/AuthLayout";
-
+import api from "../api";
 const DecryptPage = () => {
   const [fileUrl, setFileUrl] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 
   const handleDecrypt = async (e) => {
     e.preventDefault();
@@ -23,17 +22,10 @@ const DecryptPage = () => {
 
       const token = localStorage.getItem("token");
 
-      const response = await fetch(
-        `${API_URL}/files/decrypt`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            ...(token ? { "Authorization": `Bearer ${token}` } : {})
-          },
-          body: JSON.stringify({ fileUrl, password }),
-        }
-      );
+      const response = await api.post("/files/decrypt", {
+  fileUrl,
+  password
+});
 
       if (!response.ok) {
         const err = await response.json();

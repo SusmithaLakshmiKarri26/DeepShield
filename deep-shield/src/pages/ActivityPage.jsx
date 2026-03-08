@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Lock, Unlock, Eye } from "lucide-react";
+import api from "../api";
 const ActivityPage = () => {
   const [encryptedFiles, setEncryptedFiles] = useState([]);
   const [decryptedFiles, setDecryptedFiles] = useState([]);
   const [decryptedByOthers, setDecryptedByOthers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   useEffect(() => {
     const fetchActivity = async () => {
       try {
-        const res = await fetch(`${API_URL}/api/activity`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json"
-          }
-        });
+        const res = await api.get("/activity", {
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`
+  }
+});
 
         const data = await res.json();
         console.log("Activity API Response:", data);

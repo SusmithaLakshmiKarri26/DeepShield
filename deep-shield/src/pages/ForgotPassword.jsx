@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../api";
 import AuthLayout from "../components/AuthLayout";
 
 const ForgotPassword = () => {
@@ -13,10 +13,9 @@ const ForgotPassword = () => {
     setError("");
 
     try {
-      const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
-      await axios.post(
-      `${API_URL}/auth/forgot-password`,
-      { email }
+      await api.post(
+        "/auth/forgot-password",
+        { email }
       );
 
       setMessage("Reset link sent to your email.");

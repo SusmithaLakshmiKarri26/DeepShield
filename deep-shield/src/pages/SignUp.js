@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout";
-import axios from "axios";
+import api from "../api";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -62,9 +62,8 @@ const SignUpPage = () => {
 
   if (Object.keys(validationErrors).length === 0) {
     try {
-      const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
-      const response = await axios.post(
-        `${API_URL}/auth/register`,
+      const response = await api.post(
+        "/auth/register",
         {
           firstname: formData.firstName,
           lastname: formData.lastName,
