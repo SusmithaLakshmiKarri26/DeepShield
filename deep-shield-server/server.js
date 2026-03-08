@@ -9,12 +9,19 @@ const app = express();
 connectDB();
 
 // ================= MIDDLEWARE =================
-app.use(cors({
-  origin: [
+const allowedOrigins = [
   "http://localhost:3000",
   "https://deep-shield-6ayc.vercel.app"
-],
-  exposedHeaders: ["Content-Disposition"]
+];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  }
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
