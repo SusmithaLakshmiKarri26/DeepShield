@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import api from "../api";
+import api from "../api/axios";
 import AuthLayout from "../components/AuthLayout";
 import { AuthContext } from "../context/AuthContext";
 

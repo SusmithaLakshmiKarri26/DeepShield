@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import AuthLayout from "../components/AuthLayout";
-import api from "../api";
+import api from "../api/axios";
 const EncryptPage = () => {
   const fileInputRef = useRef(null);
 

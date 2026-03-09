@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../api";
+import api from "../api/axios";
 import AuthLayout from "../components/AuthLayout";
 
 const ForgotPassword = () => {

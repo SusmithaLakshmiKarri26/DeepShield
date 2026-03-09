@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout";
-import api from "../api";
+import api from "../api/axios";
 
 const SignUpPage = () => {
   const navigate = useNavigate();

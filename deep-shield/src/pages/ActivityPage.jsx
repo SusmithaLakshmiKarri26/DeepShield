@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Lock, Unlock, Eye } from "lucide-react";
-import api from "../api";
+import api from "../api/axios";
 const ActivityPage = () => {
   const [encryptedFiles, setEncryptedFiles] = useState([]);
   const [decryptedFiles, setDecryptedFiles] = useState([]);

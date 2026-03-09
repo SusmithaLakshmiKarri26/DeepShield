@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import AuthLayout from "../components/AuthLayout";
-import api from "../api";
+import api from "../api/axios";
 const DecryptPage = () => {
   const [fileUrl, setFileUrl] = useState("");
   const [password, setPassword] = useState("");
