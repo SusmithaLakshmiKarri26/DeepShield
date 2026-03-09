@@ -5,7 +5,7 @@ import api from "../api/axios";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
-
+  const [success, setSuccess] = useState("");
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -62,7 +62,7 @@ const SignUpPage = () => {
 
   if (Object.keys(validationErrors).length === 0) {
     try {
-      const response = await api.post(
+      await api.post(
         "/auth/register",
         {
           firstname: formData.firstName,
@@ -72,10 +72,10 @@ const SignUpPage = () => {
         }
       );
 
-      alert("Registration successful!");
-      console.log(response.data);
-
+      setSuccess("Registration successful! Redirecting to login...");
+      setTimeout(() => {
       navigate("/login");
+      }, 2000);
     } catch (error) {
       console.error(error);
       alert(
@@ -210,6 +210,7 @@ const SignUpPage = () => {
       {/* Submit Button */}
       <button
         type="submit"
+        disabled={success}
         className="
           col-span-2 py-3 rounded-lg font-semibold mt-4
           bg-gradient-to-r from-[#a855f7] to-[#6366f1]
@@ -219,6 +220,11 @@ const SignUpPage = () => {
       >
         Create Account
       </button>
+      {success && (
+        <p className="text-green-500 text-sm text-center col-span-2">
+        {success}
+      </p>
+)}
 
     </form>
   </AuthLayout>

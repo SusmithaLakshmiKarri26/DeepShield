@@ -77,9 +77,6 @@ const isStrongPassword = (p) =>
       return setError("Password must be 12+ characters with upper, lower, number and symbol");
     if (password !== confirmPassword) return setError("Passwords do not match");
 
-    const token = localStorage.getItem("token");
-    if (!token) return setError("You are not logged in");
-
     try {
       setLoading(true);
       setDownloadUrl("");
@@ -89,15 +86,11 @@ const isStrongPassword = (p) =>
       formData.append("password", password);
       formData.append("outfileName", outfileName || selectedFile.name);
 
-      const response = await api.post("/files/encrypt", formData, {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-});
+      const response = await api.post("/files/encrypt", formData);
 
 setDownloadUrl(response.data.fileUrl);
     } catch (err) {
-      setError(err.message);
+      setError(err.response?.data?.message || "Encryption failed");
     } finally {
       setLoading(false);
     }

@@ -20,21 +20,13 @@ const DecryptPage = () => {
     try {
       setLoading(true);
 
-      const token = localStorage.getItem("token");
-
-      const response = await api.post("/files/decrypt", {
-  fileUrl,
-  password
-});
-
-      if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.message);
-      }
+      const response = await api.post("/files/decrypt",
+        { fileUrl, password },
+        { responseType: "blob" }
+      );
 
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
-
       // 🔹 Get filename from backend header
       let fileName = "downloaded-file";
 
@@ -55,7 +47,7 @@ const DecryptPage = () => {
       window.URL.revokeObjectURL(url);
 
     } catch (err) {
-      setError(err.message);
+    setError(err.response?.data?.message || "Decryption failed");
     } finally {
       setLoading(false);
     }

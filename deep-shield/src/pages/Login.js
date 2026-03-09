@@ -48,12 +48,12 @@ const LoginPage = () => {
   setLoading(true);
 
   try {
-    const response = await api.post(
+    await api.post(
       "/auth/login",
       formData
     );
 
-    console.log("Login Success:", response.data);
+    //console.log("Login Success:", response.data);
 
     setLoading(false);
 

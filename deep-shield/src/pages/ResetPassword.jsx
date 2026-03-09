@@ -14,11 +14,13 @@ const ResetPassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const strong = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{12,}$/;  
     if (password !== confirmPassword) {
       return setError("Passwords do not match");
     }
-
+    if (!strong.test(password)) {
+      return setError("Password must be 12+ characters with uppercase, lowercase, number and symbol");
+    }
     try {
       await api.post(
         `/auth/reset-password/${token}`,
