@@ -16,7 +16,7 @@ const tranEmailApi = new SibApiV3Sdk.TransactionalEmailsApi();
 const sendEmail = async (toEmail, subject, htmlContent) => {
   try {
     await tranEmailApi.sendTransacEmail({
-      sender: { email: "22b01a0579@svecw.edu.in", name: "DeepShield" },
+      sender: { email: "supportfromefv@gmail.com", name: "DeepShield" },
       to: [{ email: toEmail }],
       subject,
       htmlContent
