@@ -16,7 +16,7 @@ const ActivityPage = () => {
   }
 });
 
-        const data = await res.json();
+        const data = res.json();
         console.log("Activity API Response:", data);
 
         // Separate encrypt & decrypt logs
@@ -32,7 +32,7 @@ const ActivityPage = () => {
     };
 
     fetchActivity();
-  }, [API_URL]);
+  }, []);
 
   if (loading) {
     return (
