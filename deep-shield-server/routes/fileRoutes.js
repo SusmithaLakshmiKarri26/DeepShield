@@ -31,7 +31,7 @@ const supabase = createClient(
 );
 console.log("SUPABASE_URL:", process.env.SUPABASE_URL);
 console.log("SUPABASE_KEY:", process.env.SUPABASE_SERVICE_ROLE_KEY);
-const PYTHON_SERVICE_URL = "http://127.0.0.1:5001";
+const PYTHON_SERVICE_URL = "https://deepshield-backend.onrender.com";
 
 router.post("/encrypt", protect, upload.single("file"), async (req, res) => {
   try {
@@ -79,7 +79,6 @@ router.post("/encrypt", protect, upload.single("file"), async (req, res) => {
 
 if (error) throw error;
 
-    if (error) throw error;
 
     // 🔗 Generate signed URL
     const { data: signedUrlData, error: signedError } =

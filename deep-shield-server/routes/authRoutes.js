@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
-const sendEmail = require("../utils/brevoMailer");
+const transporter = require("../utils/mailer");
 const router = express.Router();
 const crypto = require("crypto");
 const strongPassword = (p) =>
@@ -114,15 +114,12 @@ router.post("/login", async (req, res) => {
     console.log("Generated OTP:", otp);
 
     // Send OTP email
-    try {
-  await sendEmail(
-    user.email,
-    "Your Login OTP - DeepShield",
-    `<h2>Your OTP is ${otp}</h2><p>It expires in 5 minutes.</p>`
-  );
-} catch (err) {
-  console.log("OTP email failed but login continues", err.message);
-}
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: user.email,
+      subject: "Your Login OTP - DeepShield",
+      text: `Your OTP is ${otp}. It expires in 5 minutes.`
+    });
 
     res.status(200).json({
       message: "OTP sent successfully"
@@ -208,14 +205,15 @@ router.post("/forgot-password", async (req, res) => {
     const link = `${clientUrl}/reset-password/${token}`;
 
     try {
-  await sendEmail(
-    user.email,
-    "Reset your DeepShield password",
-    `<p>Click the link to reset your password (valid 15 minutes):</p><a href="${link}">${link}</a>`
-  );
-} catch (err) {
-  console.log("Reset password email failed", err.message);
-}
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: user.email,
+        subject: "Reset your DeepShield password",
+        text: `Click the link to reset your password (valid 15 minutes): ${link}`
+      });
+    } catch (e) {
+      console.error("Reset email send error:", e.message);
+    }
     console.log("Password reset link:", link);
     return res.json({ message: "If this email exists, a reset link was sent" });
   } catch (e) {
