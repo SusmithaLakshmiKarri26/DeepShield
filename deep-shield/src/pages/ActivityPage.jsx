@@ -16,7 +16,7 @@ const ActivityPage = () => {
   }
 });
 
-        const data = res.json();
+        const data = res.data;
         console.log("Activity API Response:", data);
 
         // Separate encrypt & decrypt logs
