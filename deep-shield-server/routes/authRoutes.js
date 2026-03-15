@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
-const transporter = require("../utils/mailer");
+const { sendEmail } = require("../utils/brevoMailer");
 const router = express.Router();
 const crypto = require("crypto");
 const strongPassword = (p) =>
@@ -115,12 +115,11 @@ router.post("/login", async (req, res) => {
 
     // Send OTP email
     try {
-  await transporter.sendMail({
-    from: process.env.EMAIL_USER,
-    to: user.email,
-    subject: "Your Login OTP - DeepShield",
-    text: `Your OTP is ${otp}. It expires in 5 minutes.`
-  });
+  await sendEmail(
+  user.email,
+  "Your Login OTP - DeepShield",
+  `<h2>Your OTP is ${otp}</h2><p>It expires in 5 minutes.</p>`
+);
 
   console.log("OTP email sent");
 } catch (mailError) {
