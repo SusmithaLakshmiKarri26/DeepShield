@@ -114,12 +114,18 @@ router.post("/login", async (req, res) => {
     console.log("Generated OTP:", otp);
 
     // Send OTP email
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: user.email,
-      subject: "Your Login OTP - DeepShield",
-      text: `Your OTP is ${otp}. It expires in 5 minutes.`
-    });
+    try {
+  await transporter.sendMail({
+    from: process.env.EMAIL_USER,
+    to: user.email,
+    subject: "Your Login OTP - DeepShield",
+    text: `Your OTP is ${otp}. It expires in 5 minutes.`
+  });
+
+  console.log("OTP email sent");
+} catch (mailError) {
+  console.error("EMAIL SEND ERROR:", mailError.message);
+}
 
     res.status(200).json({
       message: "OTP sent successfully"
