@@ -159,18 +159,21 @@ const fileName = pathParts[1].split("?")[0];
 
     // 🔓 Call Python decrypt
     const decryptResponse = await axios.post(
-      `${PYTHON_SERVICE_URL}/decrypt`,
-      {
-        encrypted_file: encryptedBase64,
-        password,
-      }
-    );
+  `${PYTHON_SERVICE_URL}/decrypt`,
+  {
+    encrypted_file: encryptedBase64,
+    password,
+  }
+);
 
-    // Convert base64 → original file bytes
-    const decryptedBuffer = Buffer.from(
-      decryptResponse.data.decrypted_data,
-      "base64"
-    );
+if (!decryptResponse.data.decrypted_data) {
+  throw new Error("Python decrypt response missing decrypted_data");
+}
+
+const decryptedBuffer = Buffer.from(
+  decryptResponse.data.decrypted_data,
+  "base64"
+);
 
     const decryptedBy = req.user._id;
 
