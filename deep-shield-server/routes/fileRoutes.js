@@ -223,7 +223,7 @@ res.setHeader(
           await DecryptionLog.create({
             file_id: file._id,
             owner_id: file.user_id,
-            decrypted_by: null,
+            decrypted_by: req.user._id,
             ip_address: req.ip,
             status: "FAILED"
           });
