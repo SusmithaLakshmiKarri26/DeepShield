@@ -168,7 +168,7 @@ const fileName = pathParts[1].split("?")[0];
 
     // Convert base64 → original file bytes
     const decryptedBuffer = Buffer.from(
-      decryptResponse.data.decrypted,
+      decryptResponse.data.decrypted_data,
       "base64"
     );
 
