@@ -1,9 +1,15 @@
+import os
+
 from flask import Flask, request, jsonify
 from encrypt.deepshield_aes import encrypt_data, decrypt_data
 import base64
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
+
+@app.route("/")
+def home():
+    return "DeepShield Encryption API Running"
 
 # ================= ENCRYPT =================
 @app.route("/encrypt", methods=["POST"])
@@ -66,4 +72,5 @@ def decrypt():
         }), 400
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5001, debug=False)
+    port = int(os.environ.get("PORT", 5001))
+    app.run(host="0.0.0.0", port=port, debug=False)
