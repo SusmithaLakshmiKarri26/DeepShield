@@ -59,6 +59,8 @@ const DecryptPage = () => {
 
         {/* File URL */}
         <input
+          id="fileUrl"
+          name="fileUrl"
           type="text"
           placeholder="Paste File URL here"
           value={fileUrl}
@@ -77,6 +79,8 @@ const DecryptPage = () => {
         {/* Password */}
 <div className="relative">
   <input
+    id="password"
+    name="password"
     type={showPassword ? "text" : "password"}
     placeholder="File Password"
     value={password}

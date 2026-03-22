@@ -130,6 +130,7 @@ const urlObj = new URL(fileUrl);
 // /storage/v1/object/sign/encrypted-files/12345_filename.txt.enc
 
 const pathParts = urlObj.pathname.split("/encrypted-files/");
+console.log("Extracted fileName:", fileName);
 
 if (!pathParts[1]) {
   return res.status(400).json({ message: "Invalid file URL" });
@@ -140,7 +141,7 @@ const fileName = pathParts[1].split("?")[0];
 
     // 🔎 Find file in MongoDB
     const file = await File.findOne({ cloud_path: fileName });
-
+    console.log("Mongo file:", file);
     if (!file) {
       return res.status(404).json({ message: "File not found" });
     }
@@ -235,7 +236,8 @@ res.setHeader(
     } catch (e) {
       console.error("DecryptionLog FAILED write error:", e.message);
     }
-
+    console.error("Decrypt Error FULL:", err);
+    console.error("Python Response:", err.response?.data);
     return res.status(400).json({
       message: "Invalid password or file URL",
     });
