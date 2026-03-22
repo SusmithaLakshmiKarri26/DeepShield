@@ -8,6 +8,8 @@ import AuthLayout from "../components/AuthLayout";
 const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -45,127 +47,142 @@ const LoginPage = () => {
     setServerError("");
 
     if (Object.keys(validationErrors).length === 0) {
-  setLoading(true);
+      setLoading(true);
 
-  try {
-    await api.post(
-      "/auth/login",
-      formData
-    );
+      try {
+        await api.post("/auth/login", formData);
 
-    //console.log("Login Success:", response.data);
+        setLoading(false);
 
-    setLoading(false);
+        navigate("/verify-otp", {
+          state: { email: formData.email },
+        });
 
-    navigate("/verify-otp", {
-      state: { email: formData.email },
-    });
+      } catch (error) {
+        console.error("Login Error:", error);
 
-  } catch (error) {
-    console.error("Login Error:", error);
+        setLoading(false);
 
-    setLoading(false);
-
-    if (error.response) {
-      setServerError(error.response.data.message);
-    } else {
-      setServerError("Server not responding");
+        if (error.response) {
+          setServerError(error.response.data.message);
+        } else {
+          setServerError("Server not responding");
+        }
+      }
     }
-  }
-}
   };
 
   return (
-    <>
+    <AuthLayout title="Login to your account">
+      <form onSubmit={handleSubmit} className="space-y-5">
 
-      <AuthLayout title="Login to your account">
-  <form onSubmit={handleSubmit} className="space-y-5">
+        {/* Email */}
+        <div>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            className="
+              w-full p-3 rounded-lg border
+              bg-white dark:bg-[#140033]
+              text-[#140033] dark:text-[#ccc]
+              border-[#d8b4fe] dark:border-[#6d28d9]
+              focus:outline-none focus:ring-2 focus:ring-[#a855f7]
+              transition
+            "
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+          )}
+        </div>
 
-    {/* Email */}
-    <div>
-      <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        value={formData.email}
-        onChange={handleChange}
-        className="
-          w-full p-3 rounded-lg border
-          bg-white dark:bg-[#140033]
-          text-[#140033] dark:text-[#ccc]
-          border-[#d8b4fe] dark:border-[#6d28d9]
-          focus:outline-none focus:ring-2 focus:ring-[#a855f7]
-          transition
-        "
-      />
-      {errors.email && (
-        <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-      )}
-    </div>
+        {/* Password */}
+        <div className="relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            className="
+              w-full p-3 pr-12 rounded-lg border
+              bg-white dark:bg-[#140033]
+              text-[#140033] dark:text-[#ccc]
+              border-[#d8b4fe] dark:border-[#6d28d9]
+              focus:outline-none focus:ring-2 focus:ring-[#a855f7]
+              transition
+            "
+          />
 
-    {/* Password */}
-    <div>
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        value={formData.password}
-        onChange={handleChange}
-        className="
-          w-full p-3 rounded-lg border
-          bg-white dark:bg-[#140033]
-          text-[#140033] dark:text-[#ccc]
-          border-[#d8b4fe] dark:border-[#6d28d9]
-          focus:outline-none focus:ring-2 focus:ring-[#a855f7]
-          transition
-        "
-      />
-      {errors.password && (
-        <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-      )}
-    </div>
+          {/* Show / Hide */}
+          <span
+            onClick={() => setShowPassword(!showPassword)}
+            className="
+              absolute right-3 top-1/2 -translate-y-1/2
+              text-sm font-semibold cursor-pointer
+              text-[#a855f7] hover:text-[#9333ea]
+            "
+          >
+            {showPassword ? "Hide" : "Show"}
+          </span>
 
-    {/* Server Error */}
-    {serverError && (
-      <p className="text-red-500 text-sm text-center">
-        {serverError}
-      </p>
-    )}
+          {errors.password && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.password}
+            </p>
+          )}
+        </div>
 
-    {/* Login Button */}
-    <button
-      type="submit"
-      disabled={loading}
-      className="
-        w-full py-3 rounded-lg font-semibold
-        bg-gradient-to-r from-[#a855f7] to-[#6366f1]
-        text-white
-        hover:scale-105 transition-transform duration-300
-      "
-    >
-      {loading ? "Logging in..." : "Login"}
-    </button>
+        {/* Server Error */}
+        {serverError && (
+          <p className="text-red-500 text-sm text-center">
+            {serverError}
+          </p>
+        )}
 
-    {/* Signup Link */}
-    <p className="
-      text-center text-sm mt-4
-      text-gray-600 dark:text-gray-400
-    ">
-      Don't have an account?{" "}
-      <Link
-        to="/signup"
-        className="font-semibold text-[#a855f7] hover:underline"
-      >
-        Sign up
-      </Link>
-    </p>
-    <p className="text-center mt-2"><Link to="/forgotpassword" className="font-semibold text-[#a855f7] hover:underline">
-    Forgot password?
-    </Link></p>
+        {/* Login Button */}
+        <button
+          type="submit"
+          disabled={loading}
+          className="
+            w-full py-3 rounded-lg font-semibold
+            bg-gradient-to-r from-[#a855f7] to-[#6366f1]
+            text-white
+            hover:scale-105 transition-transform duration-300
+            disabled:opacity-50
+          "
+        >
+          {loading ? "Logging in..." : "Login"}
+        </button>
 
-  </form>
-</AuthLayout>
-    </>
+        {/* Signup Link */}
+        <p className="
+          text-center text-sm mt-4
+          text-gray-600 dark:text-gray-400
+        ">
+          Don't have an account?{" "}
+          <Link
+            to="/signup"
+            className="font-semibold text-[#a855f7] hover:underline"
+          >
+            Sign up
+          </Link>
+        </p>
+
+        {/* Forgot Password */}
+        <p className="text-center mt-2">
+          <Link
+            to="/forgotpassword"
+            className="font-semibold text-[#a855f7] hover:underline"
+          >
+            Forgot password?
+          </Link>
+        </p>
+
+      </form>
+    </AuthLayout>
   );
 };
 

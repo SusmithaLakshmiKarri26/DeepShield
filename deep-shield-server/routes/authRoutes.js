@@ -210,16 +210,26 @@ router.post("/forgot-password", async (req, res) => {
     const link = `${clientUrl}/reset-password/${token}`;
 
     try {
-      await transporter.sendMail({
-        from: process.env.EMAIL_USER,
-        to: user.email,
-        subject: "Reset your DeepShield password",
-        text: `Click the link to reset your password (valid 15 minutes): ${link}`
-      });
+      await sendEmail(
+        user.email,
+        "Reset your DeepShield password",
+        `
+        <h2>Password Reset Request</h2>
+        <p>Click the button below to reset your password:</p>
+        <a href="${link}" 
+        style="background:#6d28d9;color:white;padding:10px 20px;text-decoration:none;border-radius:5px;">
+          Reset Password
+        </a>
+        <p>This link expires in 15 minutes.</p>
+      `
+    );
+      console.log("Reset email sent");
     } catch (e) {
       console.error("Reset email send error:", e.message);
     }
-    console.log("Password reset link:", link);
+    if (process.env.NODE_ENV !== "production") {
+      console.log("Password reset link:", link);
+    }
     return res.json({ message: "If this email exists, a reset link was sent" });
   } catch (e) {
     console.error("FORGOT PASSWORD ERROR:", e.message);

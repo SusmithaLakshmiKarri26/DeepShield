@@ -37,11 +37,11 @@ const LandingPage = () => {
           <h1 className="text-6xl md:text-6xl font-extrabold leading-tight
           bg-gradient-to-r from-[#a855f7] to-[#6366f1]
           bg-clip-text text-transparent">
-            Encrypted File Vault
+            DeepShield AES
           </h1>
 
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-xl">
-            Encrypted File Vault provides a secure platform to encrypt,
+            DeepShield AES - An <i>ENCRYPTED FILE VAULT</i> provides a secure platform to encrypt,
             store, and manage sensitive text files. Maintain full control
             over your data with strong encryption and protected access.
           </p>

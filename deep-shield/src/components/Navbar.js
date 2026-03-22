@@ -53,7 +53,7 @@ const Navbar = () => {
           <h1 className="text-xl font-bold 
             text-[#1e004d] 
             dark:text-[#b366ff]">
-            Encrypted File Vault
+            DeepShield AES
           </h1>
         </Link>
 
