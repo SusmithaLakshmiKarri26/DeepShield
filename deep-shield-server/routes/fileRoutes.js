@@ -113,6 +113,7 @@ console.log("Saved file:", savedFile);
 
 
 router.post("/decrypt", protect, async (req, res) => {
+  let fileName;
   try {
     const { fileUrl, password } = req.body;
 
@@ -128,16 +129,16 @@ const urlObj = new URL(fileUrl);
 
 // Path example:
 // /storage/v1/object/sign/encrypted-files/12345_filename.txt.enc
+      const pathParts = urlObj.pathname.split("/encrypted-files/");
 
-const pathParts = urlObj.pathname.split("/encrypted-files/");
-console.log("Extracted fileName:", fileName);
+      if (!pathParts[1]) {
+        return res.status(400).json({ message: "Invalid file URL" });
+    }
 
-if (!pathParts[1]) {
-  return res.status(400).json({ message: "Invalid file URL" });
-}
+    fileName = pathParts[1].split("?")[0]; // assign first
 
-// Remove query params if any
-const fileName = pathParts[1].split("?")[0];
+    console.log("Extracted fileName:", fileName); // ✅ correct place
+
 
     // 🔎 Find file in MongoDB
     const file = await File.findOne({ cloud_path: fileName });
@@ -221,8 +222,9 @@ res.setHeader(
       if (fileUrl) {
         const urlObj = new URL(fileUrl);
         const pathnameParts = urlObj.pathname.split("/");
-        const fileName = pathnameParts[pathnameParts.length - 1];
-        const file = await File.findOne({ cloud_path: fileName });
+        const extractedName = pathnameParts[pathnameParts.length - 1];
+
+       const file = await File.findOne({ cloud_path: extractedName });
         if (file) {
           await DecryptionLog.create({
             file_id: file._id,
