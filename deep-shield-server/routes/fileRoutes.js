@@ -66,7 +66,7 @@ router.post("/encrypt", protect, upload.single("file"), async (req, res) => {
 
     // convert base64 → binary buffer
     const encryptedBuffer = Buffer.from(encryptedBase64, "base64");
-
+    console.log("Encrypted size (bytes):", encryptedBuffer.length);
     const safeName = req.file.originalname.replace(/\s+/g, "_").replace(/[^\w.-]/g, "");
     const fileName = `${req.user._id}_${Date.now()}_${safeName}.enc`;
 
@@ -155,7 +155,7 @@ const urlObj = new URL(fileUrl);
     if (error) throw error;
 
     const encryptedBuffer = Buffer.from(await data.arrayBuffer());
-
+    console.log("Encrypted size (bytes):", encryptedBuffer.length);
     // convert to base64 for Python
     const encryptedBase64 = encryptedBuffer.toString("base64");
 
