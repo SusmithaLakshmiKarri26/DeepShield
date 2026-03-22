@@ -166,12 +166,12 @@ const fileName = pathParts[1].split("?")[0];
   }
 );
 
-if (!decryptResponse.data.decrypted_data) {
-  throw new Error("Python decrypt response missing decrypted_data");
+if (!decryptResponse.data.decrypted) {
+  throw new Error("Python decrypt response missing decrypted");
 }
 
 const decryptedBuffer = Buffer.from(
-  decryptResponse.data.decrypted_data,
+  decryptResponse.data.decrypted,
   "base64"
 );
 

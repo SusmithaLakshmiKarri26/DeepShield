@@ -25,12 +25,12 @@ const DecryptPage = () => {
         { responseType: "blob" }
       );
 
-      const blob = await response.blob();
+      const blob = response.data;
       const url = window.URL.createObjectURL(blob);
       // 🔹 Get filename from backend header
       let fileName = "downloaded-file";
 
-      const disposition = response.headers.get("Content-Disposition");
+      const disposition = response.headers["content-disposition"];
       if (disposition && disposition.includes("filename=")) {
         fileName = disposition
           .split("filename=")[1]
