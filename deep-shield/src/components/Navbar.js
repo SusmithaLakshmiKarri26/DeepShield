@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { FaSun, FaMoon } from "react-icons/fa";
 import logo from "../assets/logo.jpeg";
 
 const Navbar = () => {
@@ -108,10 +109,19 @@ const Navbar = () => {
 
           {/* Theme Toggle */}
           <button
-            onClick={() => setDarkMode(!darkMode)}
-            className="text-xl ml-2 transition text-[#1e004d] dark:text-[#b366ff]">
-            {darkMode ? "☀️" : "🌙"}
-          </button>
+  onClick={() => setDarkMode(!darkMode)}
+  className="
+    w-10 h-10 flex items-center justify-center
+    rounded-full border
+    border-[#a855f7]
+    text-lg
+    text-[#1e004d] dark:text-[#b366ff]
+    hover:bg-[#a855f7] hover:text-white
+    transition
+  "
+>
+  {darkMode ? <FaSun /> : <FaMoon />}
+</button>
 
         </div>
 
